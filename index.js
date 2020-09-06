@@ -40,8 +40,8 @@ const prepairedValues = async (list) => new Promise((resolve, reject) => {
             element.flightCode,
             element.price,
             'active',
-            element.branch,
             element.arrivalAirPort,
+            element.branch,
             element.departureAirPort,
         ]);
         if (index === length - 1) resolve(values);
@@ -119,7 +119,7 @@ const find = async (departure, arrival, departureDate) => {
                 departureAirPort: departureAirPort.substr(departureAirPort.length - 4, 3),
                 arrivalDateTime,
                 arrivalAirPort: arrivalAirPort.substr(arrivalAirPort.length - 4, 3),
-                price: Number(price.substr(0, price.length - 2).replace('.', '')),
+                price: Number(price.substr(0, price.length - 2).replaceAll('.', '')),
             });
         });
         return result;
@@ -129,22 +129,22 @@ const find = async (departure, arrival, departureDate) => {
 
     // In thông tin lấy được thành file csv
     const csv = parse(listContentOneWay);
-    fs.writeFileSync(`output/${departureDate}.csv`, csv);
+    fs.writeFileSync(`output/${departure + arrival + departureDate}.csv`, csv);
 
     // Thêm thông tin vào database
-    // const values = await prepairedValues(listContentOneWay);
-    // const connection = await connect(config);
-    // const insertSQL = await query(connection, insertQuery, [values]);
-    // console.log(insertSQL.message);
+    const values = await prepairedValues(listContentOneWay);
+    const connection = await connect(config);
+    const insertSQL = await query(connection, insertQuery, [values]);
+    console.log(insertSQL.message);
 
     await browser.close();
 };
 
 (async () => {
     const n = 5;
-    const departure = 'Hồ Chí Minh (SGN)';
-    const arrival = 'Hà Nội (HAN)';
-    let date = '2020-10-21';
+    const departure = 'Hà Nội (HAN)';
+    const arrival = 'Hồ Chí Minh (SGN)';
+    let date = '2020-09-26';
     for (let i = 0; i < n; i++) {
         console.log(`Times: ${i + 1}`);
         try {
