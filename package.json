@@ -1,0 +1,22 @@
+{
+  "name": "gs-pptr",
+  "version": "1.0.0",
+  "description": "Getting started with puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "puppeteer",
+    "crawl"
+  ],
+  "author": "Toan Nguyen",
+  "license": "MIT",
+  "dependencies": {
+    "date-fns": "^2.16.1",
+    "json2csv": "^5.0.1",
+    "mysql": "^2.18.1",
+    "puppeteer": "^5.2.1"
+  }
+}
